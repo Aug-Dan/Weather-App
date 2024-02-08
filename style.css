@@ -1,0 +1,183 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+.card {
+  width: 90%;
+  max-width: 470px;
+  background: skyblue;
+  color:#fff;
+  margin: 15px auto 0;
+  border-radius: 20px;
+  padding: 40px 35px;
+  text-align: center;
+}
+
+body{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background: #222;
+}
+
+.search-box{
+  position: relative;
+  display: flex;
+  height: 60px;
+  width: 60px;
+  align-items: center;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.search-box.active{
+  width: 350px;
+
+}
+
+.search-box input{
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  color: transparent;
+  background-color: transparent; /* Essa é a cor da caixa de entrada. Ela deve ser transparente quando recolhida */
+  font-size: 18px;
+  border-radius: 50px;
+  padding: 0 60px 0 20px;
+
+  &::placeholder {
+    color: transparent /* Cor do placeholder quando a barra de pesquisa não estiver ativa */
+  }
+}
+
+.search-box.active input{
+  background-color: #fff;
+  color: #222;
+  &::placeholder {
+    color: #222 /* Cor do placeholder quando a barra de pesquisa não estiver ativa */
+  }
+}
+
+.search-box .search-btn{
+
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  right: 5px;
+  transform: translateY(-50%);
+  height: 50px;
+  width: 50px;
+  background: #222;
+  line-height: 60px;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.search-box .cancel-btn{
+
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  
+  height: 50px;
+  width: 50px;
+  line-height: 60px;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 50px;
+
+  cursor: pointer;
+  background-color: #222; /* teste */
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.search-box .cancel-btn.active{
+
+  right: -60px;
+
+  height: 50px;
+  width: 50px;
+  line-height: 60px;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 50px;
+
+  transform: translateY(-50%) rotate(360deg);
+  /* teste */
+}
+
+.place {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.place img {
+  width: 20px; /* Ajuste o tamanho conforme necessário */
+  margin-right: 5px; /* Adapte a margem conforme necessário */
+}
+
+.weather-icon{
+  height: 204px;
+  width: 204px;
+  margin-top: 30px;
+}
+
+.weather h1{
+  font-size: 60px;
+  font-weight: 500;
+}
+
+.weather h2{
+  font-size: 40px;
+  font-weight: 400;
+  margin-top: -10px;
+}
+
+.details{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.col{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+}
+
+.col img{
+  width: 32px;
+  margin-right: 5px;
+}
+
+.feelsLike, .humidity, .windSpeed{
+  font-size: 20px;
+}
+
+.weather{
+  display: none;
+} 
+
+.error {
+  display: none; /* Inicialmente, oculta a div de erro */
+}
+
+.error.active {
+  display: block; /* Mostra a div de erro quando a classe 'active' está presente */
+}
+
+.error-icon {
+  height: 204px;
+  width: 204px;
+  margin-top: 30px;
+}

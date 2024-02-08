@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tenki App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="card">
+
+    <div class="search-box">
+      <input type="text" placeholder="Enter city name" spellcheck="false">
+      <div class="search-btn">
+        <i> <img src="images/search.png"> </i>
+      </div>
+      <div class="cancel-btn">
+        <i> <img src="images/cancel.png"> </i>
+      </div>
+
+    </div>
+
+    <div class="error">
+      <img src="images/data-not-found (1).png" class="error-icon">
+      <p>City not found</p>
+    </div>
+
+    <div class="weather">
+      <img src="images/data-not-found (1).png" class="weather-icon">
+      <h1 class="temperature">18°c</h1>
+      <h2 class="currentWeather">Thunderstorm</h2>
+
+      <!-- <h3 class="location">Tokyo, Japan</h3> -->
+
+      <div class="place">
+        <img src="images/map-solid-204.png">
+        <p>Berlin, DE</p>
+      </div>
+
+      <div class="details">
+        <div class="col">
+          <img src="images/thermometer-solid-204.png" >
+          <div>
+            <p class="feelsLike">15°c</p>
+            <p>Feels like</p>
+          </div>
+        </div>
+
+        <div class="col">
+          <img src="images/droplet-half-solid-204.png" >
+          <div>
+            <p class="humidity">50%</p>
+            <p>Humidity</p>
+          </div>
+        </div>
+
+        <div class="col">
+          <img src="images/wind-regular-204.png" >
+          <div>
+            <p class="windSpeed">10 km/h</p>
+            <p>Wind speed</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+  <script>
+    const searchBtn = document.querySelector(".search-btn");
+    const cancelBtn = document.querySelector(".cancel-btn");
+    const searchBox = document.querySelector(".search-box");
+    const searchInput = document.querySelector("input");
+
+    searchBtn.onclick = () =>{ // função anonima
+      searchBox.classList.add("active");
+      searchInput.classList.add("active");
+      searchBtn.classList.add("active");
+      cancelBtn.classList.add("active");
+    }
+
+    cancelBtn.onclick = () =>{ // função anonima
+      searchBox.classList.remove("active");
+      searchInput.classList.remove("active");
+      searchBtn.classList.remove("active");
+      cancelBtn.classList.remove("active");
+    }
+
+    const apiKey = "5043cf7f91b640745e5632f1e47406a7";
+    const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+    const searchBar = document.querySelector(".search-box input");
+    const searchButton = document.querySelector(".search-btn")
+    const weatherIcon = document.querySelector(".weather-icon");
+
+    async function checkWeather(city){
+      const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+
+      const errorDiv = document.querySelector(".error");
+      const weatherDiv = document.querySelector(".weather");
+
+      if (response.status == 404) {
+        // City not found
+        weatherIcon.src = "images/data-not-found (1).png";
+        weatherDiv.style.display = "none";
+        errorDiv.classList.add("active"); // Adiciona a classe 'active' para mostrar a div de erro
+        // Restante do código omitido para a cidade não encontrada
+      } else {
+        // City found, display weather information
+        errorDiv.classList.remove("active"); // Remove a classe 'active' para ocultar a div de erro
+        // Restante do código omitido para a cidade encontrada
+      }
+
+      var data = await response.json();
+      // console.log(data)
+      
+      document.querySelector(".place p").innerHTML = data.name + ', ' + data.sys.country;
+      document.querySelector(".temperature").innerHTML = Math.round(data.main.temp) + '°c';
+      document.querySelector(".currentWeather").innerHTML = (data.weather[0].description).replace(/\b\w/g, function(match) {return match.toUpperCase();});
+      document.querySelector(".feelsLike").innerHTML = Math.round(data.main.feels_like) + '°c';
+      document.querySelector(".humidity").innerHTML = data.main.humidity + '%';
+      document.querySelector(".windSpeed").innerHTML = data.wind.speed + ' km/h';
+
+    switch(data.weather[0].main){
+      case "Clouds":
+        weatherIcon.src = "images/clouds.png";
+        break;
+      case "Clear":
+        weatherIcon.src = "images/clear.png";
+        break;
+      case "Drizzle":
+        weatherIcon.src = "images/drizzle.png";
+        break;
+      case "Rain":
+        weatherIcon.src = "images/rain.png";
+        break;
+      case "Mist":
+        weatherIcon.src = "images/mist.png";
+        break;
+      case "Snow":
+        weatherIcon.src = "images/snow.png";
+        break;
+      default:
+        break;
+    }
+
+    document.querySelector(".weather").style.display = "block";
+    } 
+
+    searchBtn.addEventListener("click", () =>{
+      checkWeather(searchBar.value);
+    })
+
+  </script>
+
+</body>
+
+</html>
